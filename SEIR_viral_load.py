@@ -636,5 +636,5 @@ def SEIRsimulation_suppression(N,
         Rt.append(len(R))
         Qt.append(len(Q))
         SQt.append(len(SQ))
-    return St,It,Rt,Qt,SQt,np.sum(was_infected_ext),np.sum(was_infected_int),pre_control_external,pre_control_internal
+    return St,It,Rt,Qt,SQt,np.sum(was_infected_ext),np.sum(was_infected_int)
 
