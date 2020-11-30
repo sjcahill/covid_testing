@@ -1,27 +1,11 @@
-# Surveillance testing of SARS-CoV-2
+# Preface
 
-This repository contain code to accompany the manuscript `Test sensitivity is secondary to frequency and turnaround time for COVID-19 surveillance` by Daniel B. Larremore, Bryan Wilder, Evan Lester, Soraya Shehata, James M. Burke, James A. Hay, Milind Tambe, Michael J. Mina, Roy Parker.
+This is a modified version this github repository: https://github.com/LarremoreLab/covid_testing
 
-The code requires:
-- python
-- numpy 
-- matplotlib
+## About this Repository
 
-Please see `Example Calculations.ipynb` for example calculations related to the manuscript. 
+This repo contains the materials used for the APAM Senior Seminar Project by Andrew Meador and Sean Cahill.
 
-# License
+It features a SEIR simulation that helps analyze the effects of mass public screening testing schemes on disease 
+tranmission.
 
-Copyright (C) 2020, Daniel Larremore
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program (see COPYING.txt).  If not, see <https://www.gnu.org/licenses/>.
