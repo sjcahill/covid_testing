@@ -1,0 +1,19 @@
+inputs: none
+outputs: 28 component vector of log10 viral loads 
+
+(Make four random draws)
+
+t3 = random draw from U(0,1) + 2.5
+tp = t3 + random draw from Gamma(1.5) + .5
+while tp > 3:
+    tp = t3 + random draw from Gamma(1.5) + .5
+t6 = t3 + tp + random draw from U(4,9)
+yp = random draw from U(7,11)
+
+v = vector of length 28
+for t from 1 to 28:
+    v[t] = ViralLoadFunction(t, t3, tp, t6, yp)
+
+return v
+
+

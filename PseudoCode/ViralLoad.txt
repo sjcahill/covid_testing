@@ -1,0 +1,14 @@
+Pseudocode for calculating log10 Viral load at
+time t based on randomly drawn trajectory
+
+inputs: t, t3, tp, t6, yp
+outputs: log10 viral load at time t
+
+if t < t3:
+    return 0
+
+else if t < tp:
+    return (t-t3)*(yp-3)/(tp-t3) + 3
+
+else:
+    return max(0, (t-tp)*(6-yp)/(t6-yp)+yp)

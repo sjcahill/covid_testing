@@ -1,0 +1,78 @@
+Pseudocode for calculating the reduction factor of the basic reproduction
+rate R.
+
+Calculates the reduction in R for a specific testing policy
+
+Explanation of Inputs:
+
+D = testing interval in days
+L = limit of detection in log10 of chosen test
+inf = infectiousness function (logproportional, threshold, proportional)
+asymptomatic = proportion of infections that have none or mild symptoms
+dt = turnaround time for test results
+cutoff = viral load needed to be infectious
+n_samples = just number of iterations to run
+se = proportion of tests that will function correctly
+
+---------------
+
+Inputs: D, L, inf, asymptomatic, dt, cutoff, n_samples, se
+Outputs: scalar value in (0,1] for the reduction in infectiousness
+
+pol, no_pol = 0, 0
+for i in 1:n_samples
+    #a = infectiousness removed via testing, b = from self-isolation, c = total
+    a, b, c = infectiousness_removed_indiv(D, L, inf, asymptomatic, dt, cutoff, se)
+    no_pol = no_pol + (c-b)
+    pol = pol + (c - (b+a))
+    return (pol/no_pol)
+    
+
+-> infectiousness_removed_indiv(...) just a decision fork
+to a symptomatic or asymptomatic sub-function ->
+
+#Here is the call to the asymptomatic branch
+
+infectiousness_removed_indiv_asymptomatic(D, L, inf, dt, cutoff, se)
+
+    V = randomly generate 28 day list for viral trajectory (asymptomatic).
+    I = Infectiousness score list corresponding to values in V.
+    total = sum(I)
+    phase = make a random draw from [1, 2, ..., D]
+    removed_by_testing = 0
+    removed_by_symptoms = 0
+    
+    t_test = [phase, phase + D, phase + 2*D, ...] <= 28
+    num_test = binomial(length(t_test), p = se) # scalar value of successes
+    t_test = from t_test, choose num_test tests randomly
+    t_test = sort(t_test) # list of indices
+    t_pos = empty list
+    
+    for t in t_test
+        if V[t] > L
+        append t to t_pos
+    if t_pos is empty
+        removed_by_testing = 0
+    else
+        t_dx = t_pos[0] + dt
+        removed_by_testing = sum(I[t_dx:])
+        removed_by_symptoms = 0
+    
+    return removed_by_testing, removed_by_symptoms, total
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+

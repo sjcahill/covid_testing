@@ -1,0 +1,36 @@
+initialize parameters: population, external infection rate, testing interval,
+                       limit of detection, proportion asymptomatic, results delay, R0,
+                       log10 infectiousness cutoff, initial infections, number of days
+
+c = calculated mean infectiousness in 10000 random viral trajectories
+k = R0/(c*(N-1)) #N is population
+
+#Randomly determine which members of pop will be symptomatic
+is_symptomatic = list of length N constructed via repeated sampling from
+                 binomial distribution with p equal to (1-asymptomatic rate)
+                 
+#Randomly determine which phase of testing individuals will be in
+test_schedule = list of length N constructed via repeated sampling from discrete
+                uniform distribution(1,D). D is testing interval
+
+t_symptoms = list of length N of zeros.
+                 
+
+viral_loads = empty associative array (dictionary) #Tracks viral load of individuals
+infectious_loads = empty associative array (dictionary) #Tracks associated infectiousness
+
+#Generate viral loads and infectiousness for each individual in population
+for i from 1:N
+    if is_symptomatic[i]
+        viral_loads[i] = get_trajectory(symptomatic)
+    else
+        viral_loads[i] = get_trajectory(asymptomatic)
+
+    for v in viral_loads[i]
+        infectious_loads[i] = infectiousness_func(v, cutoff)*k
+       
+S = set(1 to N)
+I, R, Q, SQ = empty sets
+St, It, Rt, Qt, SQt = empty lists  #Time series data tracking indiv in compartments.
+
+...to be continued?

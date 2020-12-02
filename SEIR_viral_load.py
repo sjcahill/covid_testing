@@ -361,6 +361,7 @@ def SEIRsimulation(N,external_rate,D,L,infectiousness_function,asymptomatic=0.65
     c = compute_factor_to_calibrate_R0_SQ(infectiousness_function,asymptomatic,cutoff)
     k = R0/(c*(N-1))
     
+    
     was_infected_ext = np.zeros(N)
     was_infected_int = np.zeros(N)
     
@@ -431,7 +432,7 @@ def SEIRsimulation(N,external_rate,D,L,infectiousness_function,asymptomatic=0.65
         # Internal infections
         infectiousnesses = [infectious_loads[i][infection_day[i]] for i in I]
         p_int_infection = 1 - np.prod(1-np.array(infectiousnesses))
-        # print(len(I),p_int_infection)
+        print(len(I),p_int_infection)
         int_infections = np.random.choice(list(S),np.random.binomial(len(S),p_int_infection))
         was_infected_int[int_infections] = 1
         S = S - set(int_infections)
