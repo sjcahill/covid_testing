@@ -28,10 +28,18 @@ for i in 1:n_samples
     return (pol/no_pol)
     
 
--> infectiousness_removed_indiv(...) just a decision fork
+-> infectiousness_removed_indiv() just a decision fork
 to a symptomatic or asymptomatic sub-function ->
 
+------------
+
 #Here is the call to the asymptomatic branch
+#Simulates one asymptomatic individual
+
+inputs: largely same as above
+outputs: 3 scalar values - infectiousness removed by testing,
+                           infectiousness removed byself-isolation,
+                           and total infectiousness 
 
 infectiousness_removed_indiv_asymptomatic(D, L, inf, dt, cutoff, se)
 

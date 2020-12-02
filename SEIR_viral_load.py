@@ -36,12 +36,10 @@ def get_trajectory(is_symptomatic=False,full=False):
     
     When full==False, returns a viral load trajectory evaluated on int days 0,1,2,...,27,
     where day 0 is the day of exposure. 
-
     When full==True, returns the integer-evaluated trajectory, as well as:
     v_fine the same trajectory evaluated at values between 0 and 28, with step size 0.01
     t_fine the steps at which the trajectory was evaluated
     t_3, t_peak, v_peak, t_6, the four stochastically drawn control values
-
     Use full==True for plotting; use full==False for more rapid simulation.
     '''
     if is_symptomatic==True:
@@ -142,7 +140,6 @@ def infectiousness_removed_indiv(D,L,inf,asymptomatic=0.65,dt=0,cutoff=6,se=1):
         dt: fixed time delay to return results
         cutoff: the minimum value of log10 viral load for infectiousness. (Manuscript default: 6)
         se: per-test sensitivity, i.e. probabilty that the test doesn't just fail due to e.g. bad sampling
-
     Returns the amount of infectiousness (arbitrary units) removed by testing, symptoms, and total
     for an INDIVIDUAL trajectory drawn randomly from the model, probabilistically symptomatic or asymptomatic.
     '''
@@ -162,7 +159,6 @@ def infectiousness_removed_indiv_symptomatic(D,L,inf,dt=0,cutoff=6,se=1):
         dt: fixed time delay to return results
         cutoff: the minimum value of log10 viral load for infectiousness. (Manuscript default: 6)
         se: per-test sensitivity, i.e. probabilty that the test doesn't just fail due to e.g. bad sampling
-
     Returns the amount of infectiousness (arbitrary units) removed by testing, symptoms, and total
     for an INDIVIDUAL symptomatic trajectory drawn randomly from the model.
     '''
@@ -207,7 +203,6 @@ def infectiousness_removed_indiv_asymptomatic(D,L,inf,dt=0,cutoff=6,se=1):
         dt: fixed time delay to return results
         cutoff: the minimum value of log10 viral load for infectiousness. (Manuscript default: 6)
         se: per-test sensitivity, i.e. probabilty that the test doesn't just fail due to e.g. bad sampling
-
     Returns the amount of infectiousness (arbitrary units) removed by testing, symptoms, and total
     for an INDIVIDUAL asymptomatic trajectory drawn randomly from the model.
     '''
@@ -241,7 +236,6 @@ def infectiousness_removed_pop(D,L,inf,asymptomatic=0.65,dt=0,cutoff=6,n_samples
         cutoff: the minimum value of log10 viral load for infectiousness. (Manuscript default: 6)
         n_samples: the number of individuals to sample in computing the population
         se: per-test sensitivity, i.e. probabilty that the test doesn't just fail due to e.g. bad sampling
-
     Returns the average amount of infectiousness (arbitrary units) removed by testing, symptoms, and total
     for n_samples individual trajectories drawn randomly from the model, with a stochastic proportion asymptomatic.
     '''
@@ -265,7 +259,6 @@ def get_R_reduction_factor(D,L,inf,asymptomatic=0.65,dt=0,cutoff=6,n_samples=100
         cutoff: the minimum value of log10 viral load for infectiousness. (Manuscript default: 6)
         n_samples: the number of individuals to sample in computing the population
         se: per-test sensitivity, i.e. probabilty that the test doesn't just fail due to e.g. bad sampling
-
     Returns the factor by which R is likely to be reduced via a particular policy.
     '''
     pol,no_pol = 0,0
@@ -285,7 +278,6 @@ def compute_factor_to_calibrate_R0_SQ(infectiousness,asymptomatic,cutoff):
         infectiousness: a function handle {proportional,logproportional,threshold}
         asymptomatic: the fraction of individuals who are asymptomatic [0,1]
         cutoff: the minimum value of log10 viral load for infectiousness. (Manuscript default: 6)
-
     Returns a constant mean_infectiousness which is used to scale absolute infectiousness in simulation
     '''
     total_infectiousness = 0
@@ -361,7 +353,6 @@ def SEIRsimulation(N,external_rate,D,L,infectiousness_function,asymptomatic=0.65
     c = compute_factor_to_calibrate_R0_SQ(infectiousness_function,asymptomatic,cutoff)
     k = R0/(c*(N-1))
     
-    
     was_infected_ext = np.zeros(N)
     was_infected_int = np.zeros(N)
     
@@ -432,7 +423,7 @@ def SEIRsimulation(N,external_rate,D,L,infectiousness_function,asymptomatic=0.65
         # Internal infections
         infectiousnesses = [infectious_loads[i][infection_day[i]] for i in I]
         p_int_infection = 1 - np.prod(1-np.array(infectiousnesses))
-        print(len(I),p_int_infection)
+        # print(len(I),p_int_infection)
         int_infections = np.random.choice(list(S),np.random.binomial(len(S),p_int_infection))
         was_infected_int[int_infections] = 1
         S = S - set(int_infections)
@@ -637,5 +628,4 @@ def SEIRsimulation_suppression(N,
         Rt.append(len(R))
         Qt.append(len(Q))
         SQt.append(len(SQ))
-    return St,It,Rt,Qt,SQt,np.sum(was_infected_ext),np.sum(was_infected_int)
-
+    return St,It,Rt,Qt,SQt,np.sum(was_infected_ext),np.sum(was_infected_int),pre_control_external,pre_control_internal
